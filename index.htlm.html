@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Formulario de Busca</title>
+    <link rel="stylesheet" type="text/css" href="crud_index.css">
+</head>
+<body>
+
+<h1>Formulário de Busca de Usuário</h1>
+
+<form id="form-busca">
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" placeholder="Digite o seu nome">
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" placeholder="Digite um endereço de email valido">
+
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" name="senha">
+
+    <button id="mamute" type="submit">ENVIAR</button>
+</form>
+
+<script>
+    const url_local = "http://192.168.0.7:9191";
+
+    document.getElementById('form-busca').addEventListener('submit', e => {
+        e.preventDefault()
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+
+        const json = {
+            "name": name,
+            "email": email,
+            "senha": senha
+        };
+
+        const url = url_local + "/user/get_usuario/?=";
+
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(json),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            success: function (e) {
+                console.log(e)
+            },
+            error: function (e) {
+                console.log("ERROR:" + e);
+            }
+        });
+    })
+</script>
+</body>
+</html>
